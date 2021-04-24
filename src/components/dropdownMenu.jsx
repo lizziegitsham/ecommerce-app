@@ -6,11 +6,10 @@ export const DropdownMenu = (content) => {
   const menu = content.content.menus;
   const subMenu = menu.children;
   console.log('menu', subMenu);
+  // console.log('categories', subMenu.categories);
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const onClick = () => setIsActive(!isActive);
-
-//   const renderMenu = (subMenus) => subMenus ? subMenus.map((subMenu, idx) => );
 
   return (
     <div className="menu-container">
@@ -22,9 +21,11 @@ export const DropdownMenu = (content) => {
       <nav ref={dropdownRef} className={`menu ${isActive ? 'active' : 'inactive'}`}>
         <ul>
             {/*{subMenu.map(name, subMenuIdx) => (*/}
-            {subMenu.map(({name}) => (
+            {subMenu.map(({name, categories}) => (
                             <div>
           <li><a href="/messages">{name}</a></li>
+          <li>{categories}</li>
+          {/*{subMenu.map(({categories}) => (<li>{categories}</li>))}*/}
           </div>
             ))}
         </ul>

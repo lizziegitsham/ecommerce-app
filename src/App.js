@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
 import { MENU_URL, PRODUCTS_URL } from './constants';
-import { DropdownMenu } from './components';
+import { DropdownMenu, ProductCard } from './components';
 
 const getMenu = axios.get(MENU_URL);
 const getProducts = axios.get(PRODUCTS_URL);
@@ -20,7 +20,7 @@ export const App = () => {
     const products = responses[1].data;
     setMenu({menus: menus});
     setProducts({products: products});
-    console.log(menus, allProducts);
+    console.log('products', menus, products);
   }));
   };
   // .catch(errors => {
@@ -31,6 +31,7 @@ getHomePageData();
   // useEffect(() => {
   //   getHomePageData();
   // }, []);
+  console.log(allProducts.products);
 
   return (
     <div className="App">
@@ -49,6 +50,9 @@ getHomePageData();
           Learn React
         </a>
       </header>
+      <div>
+        <ProductCard content={allProducts.products} />
+      </div>
     </div>
   );
 }
