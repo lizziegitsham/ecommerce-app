@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+
+//would use this spinner to add a loading overlay whilst the data was returned using an isLoading useState hook
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -49,7 +51,6 @@ export const HomeScreen = () => {
     const products = responses[1].data;
     setMenu({menus: menus});
     setProducts({products: products});
-    console.log('products', menus, products);
   }))
     .catch(errors => {
     console.error(`Error: ${errors}`)
@@ -62,10 +63,7 @@ getHomePageData();
 
 
   const products = allProducts.products;
-  console.log('products list', products);
-
   const addToCart = (product) => {setCart([...cart, product])};
-  console.log('cart', cart);
 
     
    return (

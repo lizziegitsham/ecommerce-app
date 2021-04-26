@@ -4,11 +4,9 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import styled from 'styled-components';
 import { CartScreen } from '../../pages/cartScreen';
 
-export const DropdownMenu = ({content, cart}) => {
-  console.log('content', content);
+export const DropdownMenu = ({content, cart }) => {
   const menu = content?.menus;
   const subMenu = menu?.children;
-  console.log('menucart', cart);
   const dropdownRef = useRef(null);
   const [isActive, setIsActive] = useState(false);
   const onClick = () => setIsActive(!isActive);
@@ -20,7 +18,6 @@ export const DropdownMenu = ({content, cart}) => {
   const onOptionClicked = value => () => {
     setSelectedOption(value);
     setIsOpen(false);
-    console.log(selectedOption);
   };
 
   const Main = styled("div")`
@@ -110,7 +107,8 @@ const options = ["Mangoes", "Apples", "Oranges"];
               {subMenu?.map(({name, categories}) => (
                 <ListItem onClick={onOptionClicked({name, categories})} key={Math.random()}>
           <li>{name}</li>
-          <li>{` ${categories} `}</li>                </ListItem>
+          <li>{` ${categories} `}</li>                
+          </ListItem>
               ))}
             </DropDownList>
           </DropDownListContainer>

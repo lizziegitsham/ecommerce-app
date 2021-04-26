@@ -28,36 +28,35 @@ const HomeButton = () => {
 
 
 export const CartScreen = () => {
-    let location = useLocation()
-    const [ cart, setCart ] = useState([]);
-    console.log('state', location?.data);
+    let location = useLocation();
+    const cart = location?.data?.cart;
+    
+    const [ basket, setBasket ] = useState([cart]);
+    console.log('state', basket);
     const products = location?.data?.cart;
     const cartTotal = products?.reduce((total, { price = 0 }) => total + price, 0);
 
 
   const addToCart = (product) => {
       let hardCopy = [...products];
-      console.log('hardcopy', hardCopy);
       hardCopy = [...hardCopy, product];
-     console.log('hardcopy 3 add', hardCopy);
-      setCart(hardCopy);
-      console.log(cart);
+      console.log('add to cart product copy', hardCopy);
+      setBasket(hardCopy);
     };
 
     const removeFromCart = (product) => {
-    console.log('hardcopy', [...products]);
     let hardCopy = [...products];
-    console.log('hardcopy 2', hardCopy);
     hardCopy = hardCopy.filter((product) => product.id !== product.id);
     console.log('hardcopy 3', hardCopy);
-    setCart(hardCopy);
-    //This works when you go back to home then go back to the checkout page, would like to add in dynamic refreshing on the page.
+    // This console log is here to purely show that the filter function is working, would like to force cart to refresh on the page but would look to using local storage wqith react hooks - ultimately would have liked to have used a POST with a /cart API
+    setBasket(hardCopy);
   };
 
   const emptyCart = () => {
       let hardCopy = [];
-      console.log('hardCopy');
-      setCart(hardCopy);
+      setBasket(hardCopy);
+      console.log('new cart', cart);
+
   }
 
 
@@ -70,10 +69,8 @@ export const CartScreen = () => {
       {/*Would add buttons in here to increment/decrement the product quantity, and if the value was already one would only offer the remove button as an option*/}
     <button type="submit" onClick={() => removeFromCart(product)}>-</button>
     <button type="submit" onClick={() => addToCart(product)}>+</button>
-
     </div>
   ));
-    console.log('screen page', products);
     if (!products || location?.data == undefined) return ( <div><h1>Your cart is empty</h1></div>);
     else return(
         <div>

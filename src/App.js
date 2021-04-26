@@ -17,6 +17,7 @@ margin: 50px;
 flex-wrap: wrap;
 `;
 
+//My linting is not currently working, I have tried rebooting everything and need to update but with my internet connection I'm currently unable to, I can't apologise enough for the linting errors
 export const App = () => {
   const [allMenuItems, setMenu] = useState({menus: []});
   const [allProducts, setProducts] = useState({products: []});
@@ -28,33 +29,21 @@ export const App = () => {
     const products = responses[1].data;
     setMenu({menus: menus});
     setProducts({products: products});
-    console.log('products', menus, products);
-  }));
-  };
-  // .catch(errors => {
-  //   console.error(`Error: ${errors}`)
-  // })
+  }))
+  .catch(errors => {
+    console.error(`Error: ${errors}`)
+  })}
 getHomePageData();
 }, []);
 
   const products = allProducts.products;
-  console.log('products list', products);
 
   return (
-    // <React.fragment>
     <div>
-  <Router>
-    <Route exact path="/" component= {HomeScreen} />
-    <Route path="/basket" component={CartScreen} />
-  </Router>
-    {/*<div className="App">
-      <DropdownMenu content={allMenuItems} />
-      <Tiles>
-        {products.map((product, productIdx) => (
-        <ProductCard {...product} key={`card-${productIdx}`} />
-        ))}
-      </Tiles>
-    </div>*/}
-      </div>
+      <Router>
+        <Route exact path="/" component= {HomeScreen} />
+        <Route path="/basket" component={CartScreen} />
+      </Router>
+    </div>
   );
 }
