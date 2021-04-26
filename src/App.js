@@ -1,13 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
 import { MENU_URL, PRODUCTS_URL } from './constants';
 import { DropdownMenu, ProductCard } from './components';
+import { CartScreen, HomeScreen } from './pages';
+import styled from 'styled-components';
 
 const getMenu = axios.get(MENU_URL);
 const getProducts = axios.get(PRODUCTS_URL);
+
+const Tiles = styled.div`
+display: flex;
+justify-content: center;
+margin: 50px;
+flex-wrap: wrap;
+`;
 
 export const App = () => {
   const [allMenuItems, setMenu] = useState({menus: []});
@@ -28,31 +36,25 @@ export const App = () => {
   // })
 getHomePageData();
 }, []);
-  // useEffect(() => {
-  //   getHomePageData();
-  // }, []);
-  console.log(allProducts.products);
+
+  const products = allProducts.products;
+  console.log('products list', products);
 
   return (
-    <div className="App">
+    // <React.fragment>
+    <div>
+  <Router>
+    <Route exact path="/" component= {HomeScreen} />
+    <Route path="/basket" component={CartScreen} />
+  </Router>
+    {/*<div className="App">
       <DropdownMenu content={allMenuItems} />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <div>
-        <ProductCard content={allProducts.products} />
+      <Tiles>
+        {products.map((product, productIdx) => (
+        <ProductCard {...product} key={`card-${productIdx}`} />
+        ))}
+      </Tiles>
+    </div>*/}
       </div>
-    </div>
   );
 }
