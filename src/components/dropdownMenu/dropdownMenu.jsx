@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import { Switch, Route, Link, BrowserRouter as Router } from "react-router-dom";
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
-import styled from 'styled-components';
-import { CartScreen } from '../../pages/cartScreen';
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
+import Button from "@material-ui/core/Button";
+import styled from "styled-components";
+import { CartScreen } from "../../pages/cartScreen";
 
-export const DropdownMenu = ({content, cart }) => {
+export const DropdownMenu = ({ content, cart, emptyCart }) => {
   const menu = content?.menus;
   const subMenu = menu?.children;
   const dropdownRef = useRef(null);
@@ -21,82 +22,85 @@ export const DropdownMenu = ({content, cart }) => {
   };
 
   const Main = styled("div")`
-  font-family: sans-serif;
-  background: #f0f0f0;
-`;
+    font-family: sans-serif;
+    background: #f0f0f0;
+  `;
 
-const DropDownContainer = styled("div")`
-  width: 10.5em;
-  margin: 0 auto;
-`;
+  const DropDownContainer = styled("div")`
+    width: 10.5em;
+    margin: 0 auto;
+  `;
 
-const DropDownHeader = styled("div")`
-  margin-bottom: 0.8em;
-  padding: 0.4em 2em 0.4em 1em;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-  font-weight: 500;
-  font-size: 1.3rem;
-  color: #3faffa;
-`;
+  const DropDownHeader = styled("div")`
+    margin-bottom: 0.8em;
+    padding: 0.4em 2em 0.4em 1em;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: #3faffa;
+  `;
 
-const DropDownListContainer = styled("div")`
-  position: absolute;
-  z-index: 100;
-  width: 30em
-`;
+  const DropDownListContainer = styled("div")`
+    position: absolute;
+    z-index: 100;
+    width: 30em;
+  `;
 
-const DropDownList = styled("ul")`
-  padding: 0;
-  margin: 0;
-  padding-left: 1em;
-  background: #ffffff;
-  border: 2px solid #e5e5e5;
-  box-sizing: border-box;
-  color: #3faffa;
-  font-size: 1.3rem;
-  font-weight: 500;
-  &:first-child {
-    padding-top: 0.8em;
-  }
-`;
+  const DropDownList = styled("ul")`
+    padding: 0;
+    margin: 0;
+    padding-left: 1em;
+    background: #ffffff;
+    border: 2px solid #e5e5e5;
+    box-sizing: border-box;
+    color: #3faffa;
+    font-size: 1.3rem;
+    font-weight: 500;
+    &:first-child {
+      padding-top: 0.8em;
+    }
+  `;
 
-const ListItem = styled("li")`
-  list-style: none;
-  margin-bottom: 0.8em;
-  &:hover {
-    color: #fd9e46;
-  }
-`;
+  const ListItem = styled("li")`
+    list-style: none;
+    margin-bottom: 0.8em;
+    &:hover {
+      color: #fd9e46;
+    }
+  `;
 
-const options = ["Mangoes", "Apples", "Oranges"];
+  const options = ["Mangoes", "Apples", "Oranges"];
 
   const MenuHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-  padding: 5px;
-  color: black;
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 5px;
+    color: black;
   `;
 
-  const BasketLink = styled.link`
-  flex-direction: column;
-  `;
+  const BasketLink = styled.link`flex-direction: column;`;
 
   return (
-        <Main>
-          <MenuHeader>
-      <h1>{menu.name}</h1>
-       <Link
+    <Main>
+      <MenuHeader>
+        <h1>{menu.name}</h1>
+        <Link
           to={{
             pathname: "/basket",
-            data: {cart},
-            component: {CartScreen}
+            data: { cart },
+            component: { CartScreen }
           }}
         >
-        <ShoppingCart />
-        <span>Go To Checkout</span>
-      </Link>
+          <ShoppingCart />
+          <span>Go To Checkout</span>
+        </Link>
       </MenuHeader>
+      <div>
+        <Button size="small" onClick={emptyCart}>
+          Empty Cart
+        </Button>
+      </div>
       <DropDownContainer>
         <DropDownHeader onClick={toggling}>
           {selectedOption || "New In"}
@@ -104,11 +108,14 @@ const options = ["Mangoes", "Apples", "Oranges"];
         {isOpen && (
           <DropDownListContainer>
             <DropDownList>
-              {subMenu?.map(({name, categories}) => (
-                <ListItem onClick={onOptionClicked({name, categories})} key={Math.random()}>
-          <li>{name}</li>
-          <li>{` ${categories} `}</li>                
-          </ListItem>
+              {subMenu?.map(({ name, categories }) => (
+                <ListItem
+                  onClick={onOptionClicked({ name, categories })}
+                  key={Math.random()}
+                >
+                  <li>{name}</li>
+                  <li>{` ${categories} `}</li>
+                </ListItem>
               ))}
             </DropDownList>
           </DropDownListContainer>

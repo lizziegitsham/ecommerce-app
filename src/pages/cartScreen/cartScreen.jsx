@@ -30,6 +30,9 @@ const HomeButton = () => {
 export const CartScreen = () => {
     let location = useLocation();
     const cart = location?.data?.cart;
+
+    // These functions don't currently work, unfortunately I ran out of time and so would have added a better state handler to pass down the setCart function from the parent and then access it that way and tweak these functions to fit. 
+    //I did add an extra empty cart button to the home page to display the empty cart function working
     
     const [ basket, setBasket ] = useState([cart]);
     console.log('state', basket);
@@ -55,8 +58,6 @@ export const CartScreen = () => {
   const emptyCart = () => {
       let hardCopy = [];
       setBasket(hardCopy);
-      console.log('new cart', cart);
-
   }
 
 
@@ -65,10 +66,10 @@ export const CartScreen = () => {
   const listProductsInCart = () => products?.map((product, productIdx) => (
     <div key={product?.id}>
      <CartProduct {...product} quantity={amountOfProducts()} key={`card-${productIdx}`} />
-      <button type="submit" onClick={() => removeFromCart(product)}>Remove</button>
+      <button disabled type="submit" onClick={() => removeFromCart(product)}>Remove</button>
       {/*Would add buttons in here to increment/decrement the product quantity, and if the value was already one would only offer the remove button as an option*/}
-    <button type="submit" onClick={() => removeFromCart(product)}>-</button>
-    <button type="submit" onClick={() => addToCart(product)}>+</button>
+    <button disabled type="submit" onClick={() => removeFromCart(product)}>-</button>
+    <button disabled type="submit" onClick={() => addToCart(product)}>+</button>
     </div>
   ));
     if (!products || location?.data == undefined) return ( <div><h1>Your cart is empty</h1></div>);
@@ -79,7 +80,7 @@ export const CartScreen = () => {
         <div>
         <div>{listProductsInCart()}</div>
         <div>Total: £{cartTotal}</div>
-        <Button size="small" onClick={() => emptyCart()}>Empty Basket</Button>
+        <Button disabled size="small" onClick={() => emptyCart()}>Empty Basket</Button>
         </div>
     </div>
     );

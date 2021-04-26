@@ -60,16 +60,15 @@ export const HomeScreen = () => {
 getHomePageData();
 }, []);
 
-
-
   const products = allProducts.products;
   const addToCart = (product) => {setCart([...cart, product])};
+  const emptyCart = () => setCart([]);
 
     
    return (
 
     <div className="App">
-     <DropdownMenu content={allMenuItems} cart={cart} />
+     <DropdownMenu content={allMenuItems} cart={cart} emptyCart={() => emptyCart()} />
       <Tiles>
         {products.map((product, productIdx) => (
         <ProductCard {...product} key={`card-${productIdx}`} addClick={() => addToCart(product)} />
